@@ -1,0 +1,108 @@
+<!-- publicPage.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment Tracker - Public Page</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+  <!-- Shared Header -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Assignment Tracker</a>
+      <!-- Add navigation links here if needed -->
+    </nav>
+  </header>
+
+  <!-- Public Page Content -->
+  <div class="container mt-5">
+    <h2>Public Assignments</h2>
+    <div class="list-group" id="publicAssignmentsList">
+      <!-- Existing or initial assignments go here -->
+    </div>
+  </div>
+  
+  <div class="container mt-5">
+    <h2>Your Assignments</h2>
+    <!-- Container to display assignments -->
+    <div id="assignmentsContainer"></div>
+  
+    <!-- Simple form for adding new assignments -->
+  <form action="/add-assignment" method="post" class="mt-4" id="assignmentForm">
+    <div class="form-group">
+      <label for="title">Assignment Title:</label>
+      <input type="text" id="title" name="title" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Assignment Description:</label>
+      <textarea id="description" name="description" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Assignment</button>
+  </form>
+  
+  <!-- JavaScript to handle form submission and dynamic update -->
+  <script>
+    document.getElementById('assignmentForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Fetch values from the form
+      const title = document.getElementsByName('title')[0].value;
+      const description = document.getElementsByName('description')[0].value;
+
+      // Make an AJAX request to add the assignment
+      fetch('http://localhost:3000/add-assignment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, description }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Update the assignmentsContainer with the new assignment
+        const assignmentsContainer = document.getElementById('assignmentsContainer');
+        assignmentsContainer.innerHTML = `<div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">${data.title}</h5>
+            <p class="card-text">${data.description}</p>
+          </div>
+        </div>` + assignmentsContainer.innerHTML;
+
+        // Display the new assignment in the separate textbox
+        const separateTextbox = document.getElementById('separateTextbox');
+        separateTextbox.value += `${data.title}: ${data.description}\n`;
+
+        // Clear the form
+        document.getElementsByName('title')[0].value = '';
+        document.getElementsByName('description')[0].value = '';
+      })
+      .catch(error => console.error('Error adding assignment:', error));
+    });
+  </script>
+
+  <div class="container mt-5">
+    <h2>Separate Textbox for Assignments</h2>
+    <textarea id="separateTextbox" class="form-control" rows="5" readonly></textarea>
+  </div>
+
+  <!-- Shared Footer -->
+  <footer>
+    <div class="container">
+      <hr>
+      <p class="text-center">Assignment Tracker &copy; 2023</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
