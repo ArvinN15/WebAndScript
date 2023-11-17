@@ -1,3 +1,5 @@
+<!-- publicPage.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,8 +7,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assignment Tracker - Public Page</title>
-  <!-- Link to Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="/public/styles.css">
 </head>
 
 <body>
@@ -19,7 +21,7 @@
 
   <div class="container mt-5">
     <h2>Your Assignments</h2>
-    <!-- Container to display assignments (not working)-->
+    <!-- Container to display assignments (not working) -->
     <ul id="assignmentsList" class="list-group"></ul>
 
     <!-- Simple form for adding new assignments -->
@@ -43,23 +45,7 @@
       <p class="text-center">Assignment Tracker &copy; 2023</p>
     </div>
   </footer>
-
-  <!-- Bootstrap JS and dependencies -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-  <!-- JavaScript for form submission and dynamic update -->
-  <script>
-    document.getElementById('assignmentForm').addEventListener('submit', function (event) {
-      // Allow default form submission (page reload)
-
-      // Clear the form
-      document.getElementById('title').value = '';
-      document.getElementById('description').value = '';
-    });
-  </script>
+  
 </body>
 
 </html>
-
